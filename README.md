@@ -35,28 +35,21 @@ grunt.initConfig({
 })
 ```
 
-<!--
 ### Options
 
-#### options.separator
+#### options.reportType
 Type: `String`
-Default value: `',  '`
+Default value: `stdout`
 
 A string value that is used to do something with whatever.
 
-#### options.punctuation
+#### options.reportPath
 Type: `String`
-Default value: `'.'`
+Default value: ``
 
 A string value that is used to do something else with whatever else.
--->
 
 ### Usage Examples
-
-<!--
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
--->
 
 #### Basic compression
 This configuration will count line of the input files using the default options.
@@ -92,24 +85,40 @@ Running "sloc" (sloc) task
 ...
 ```
 
-<!--
 #### Custom Options
+
+<!--
 In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+-->
 
 ```js
 grunt.initConfig({
   sloc: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      reportType: 'json',
+      reportPath: 'path/to/sloc-v<%= pkg.version %>.json',
     },
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      'path/to/target': [ 'lib/onlyMyLib.js', 'app/**.js' ],
+      'path/to/others': [ '*.java', '*.coffee' ]
     },
   },
 })
 ```
--->
+
+**sloc-v{version}.json example**
+
+```js
+{
+  "loc": 72,
+  "sloc": 45,
+  "cloc": 10,
+  "scloc": 10,
+  "mcloc": 0,
+  "nloc": 17,
+  "file": 22
+}
+```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
