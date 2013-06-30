@@ -30,8 +30,8 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('sloc', 'Source lines of code', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
-      punctuation: '.',
-      separator: ', '
+      reportType: 'stdout',  //stdout, json
+      reportPath: null
     });
 
     // Iterate over all specified file groups.
@@ -53,17 +53,25 @@ module.exports = function(grunt) {
           });
 
     });
+    if(options.reportType == 'stdout') {
+      grunt.log.writeln('-------------------------------');
+      grunt.log.writeln('        physical lines : '+ '%s'.green, count.loc);
+      grunt.log.writeln('  lines of source code : '+ '%s'.green, count.sloc);
+      grunt.log.writeln('         total comment : '+ '%s'.cyan, count.cloc);
+      grunt.log.writeln('            singleline : '+ '%s', count.scloc);
+      grunt.log.writeln('             multiline : '+ '%s', count.mcloc);
+      grunt.log.writeln('                 empty : '+ '%s'.red, count.nloc);
+      grunt.log.writeln('');
+      grunt.log.writeln(' number of files read  : '+ '%s'.green, count.file);
+      grunt.log.writeln('-------------------------------');
+    } else if (options.reportType == 'json') {
+      
+      if (!options.reportPath) {
+        grunt.log.warn('Please specify the reporting path.');
+      }
 
-    grunt.log.writeln('-------------------------------');
-    grunt.log.writeln('        physical lines : '+ '%s'.green, count.loc);
-    grunt.log.writeln('  lines of source code : '+ '%s'.green, count.sloc);
-    grunt.log.writeln('         total comment : '+ '%s'.cyan, count.cloc);
-    grunt.log.writeln('            singleline : '+ '%s', count.scloc);
-    grunt.log.writeln('             multiline : '+ '%s', count.mcloc);
-    grunt.log.writeln('                 empty : '+ '%s'.red, count.nloc);
-    grunt.log.writeln('');
-    grunt.log.writeln(' number of files read  : '+ '%s'.green, count.file);
-    grunt.log.writeln('-------------------------------');
+      grunt.file.write(options.reportPath, JSON.stringify(count, null, 2));
+    }
   });
 
 };

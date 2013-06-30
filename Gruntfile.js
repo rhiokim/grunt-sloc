@@ -12,6 +12,8 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+
     jshint: {
       all: [
         'Gruntfile.js',
@@ -30,33 +32,37 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     sloc: {
-      options: {},
       main: {
-        options: {},
         files: {
           'test/fixtures': [ '*' ]
         }
       },
       all_files: {
-        options: {},
         files: {
           'test/fixtures': [ '**' ]
         }
       },
       specify_dir_js: {
-        options: {},
         files: {
           'test/fixtures': [ '*.js' ]
         }
       },
       all_js: {
-        options: {},
         files: {
           'test/fixtures': [ '**.js' ]
         }
       },
       sepcify_dir_all_js: {
-        options: {},
+        files: {
+          'test/fixtures/sub1': [ '*.js' ],
+          'test/fixtures/sub2': [ '**.js' ]
+        }
+      },
+      report_to_json: {
+        options: {
+          reportType: 'json',
+          reportPath: 'test/expected/sloc-v<%= pkg.version %>.json'
+        },
         files: {
           'test/fixtures/sub1': [ '*.js' ],
           'test/fixtures/sub2': [ '**.js' ]

@@ -1,8 +1,8 @@
 {
   "name": "grunt-sloc",
   "description": "SLOC(source line of codes) plugin for Grunt.js",
-  "version": "0.1.0",
-  "homepage": "https://github.com/rhiokim/grunt-line-of-code",
+  "version": "0.2.0",
+  "homepage": "https://github.com/rhiokim/grunt-sloc",
   "author": {
     "name": "rhio kim",
     "email": "rhio.kim@gmail.com",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/rhiokim/grunt-line-of-code.git"
+    "url": "git://github.com/rhiokim/grunt-sloc.git"
   },
   "bugs": {
-    "url": "https://github.com/rhiokim/grunt-line-of-code/issues"
+    "url": "https://github.com/rhiokim/grunt-sloc/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/rhiokim/grunt-line-of-code/blob/master/LICENSE-MIT"
+      "url": "https://github.com/rhiokim/grunt-sloc/blob/master/LICENSE-MIT"
     }
   ],
   "main": "Gruntfile.js",
