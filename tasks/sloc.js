@@ -53,7 +53,7 @@ module.exports = function(grunt) {
           });
 
     });
-    if(options.reportType == 'stdout') {
+    if(options.reportType === 'stdout') {
       grunt.log.writeln('-------------------------------');
       grunt.log.writeln('        physical lines : '+ '%s'.green, count.loc);
       grunt.log.writeln('  lines of source code : '+ '%s'.green, count.sloc);
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
       grunt.log.writeln('');
       grunt.log.writeln(' number of files read  : '+ '%s'.green, count.file);
       grunt.log.writeln('-------------------------------');
-    } else if (options.reportType == 'json') {
+    } else if (options.reportType === 'json') {
       
       if (!options.reportPath) {
         grunt.log.warn('Please specify the reporting path.');
