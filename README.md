@@ -106,17 +106,17 @@ grunt.initConfig({
 })
 ```
 
-**sloc-v{version}.json example**
+**exported file example**
 
 ```js
 {
-  "loc": 72,
-  "sloc": 45,
-  "cloc": 10,
-  "scloc": 10,
-  "mcloc": 0,
-  "nloc": 17,
-  "file": 22
+  "loc": 72,    //physical lines
+  "sloc": 45,   //lines of source code
+  "cloc": 10,   //total comment
+  "scloc": 10,  //singleline
+  "mcloc": 0,   //multiline
+  "nloc": 17,   //multiline
+  "file": 22    //empty
 }
 ```
 
