@@ -53,16 +53,17 @@ module.exports = function(grunt) {
           });
 
     });
+    
     if(options.reportType === 'stdout') {
       grunt.log.writeln('-------------------------------');
-      grunt.log.writeln('        physical lines : '+ '%s'.green, count.loc);
-      grunt.log.writeln('  lines of source code : '+ '%s'.green, count.sloc);
-      grunt.log.writeln('         total comment : '+ '%s'.cyan, count.cloc);
-      grunt.log.writeln('            singleline : '+ '%s', count.scloc);
-      grunt.log.writeln('             multiline : '+ '%s', count.mcloc);
-      grunt.log.writeln('                 empty : '+ '%s'.red, count.nloc);
+      grunt.log.writeln('        physical lines : '+ String(count.loc).green);
+      grunt.log.writeln('  lines of source code : '+ String(count.sloc).green);
+      grunt.log.writeln('         total comment : '+ String(count.cloc).cyan);
+      grunt.log.writeln('            singleline : '+ String(count.scloc));
+      grunt.log.writeln('             multiline : '+ String(count.mcloc));
+      grunt.log.writeln('                 empty : '+ String(count.nloc).red);
       grunt.log.writeln('');
-      grunt.log.writeln(' number of files read  : '+ '%s'.green, count.file);
+      grunt.log.writeln(' number of files read  : '+ String(count.file).green);
       grunt.log.writeln('-------------------------------');
     } else if (options.reportType === 'json') {
       
