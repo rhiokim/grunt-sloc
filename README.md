@@ -1,6 +1,6 @@
 # grunt-sloc
 
-> The best Grunt plugin ever.
+> It's SLOC plugin for Grunt.js. based on [sloc](https://npmjs.org/package/sloc)
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -35,6 +35,7 @@ grunt.initConfig({
 })
 ```
 
+<!--
 ### Options
 
 #### options.separator
@@ -48,6 +49,7 @@ Type: `String`
 Default value: `'.'`
 
 A string value that is used to do something else with whatever else.
+-->
 
 ### Usage Examples
 
@@ -57,14 +59,35 @@ In this example, the default options are used to do something with whatever. So 
 ```js
 grunt.initConfig({
   sloc: {
-    options: {},
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
+      'path/to/target': [ 'lib/onlyMyLib.js', 'app/**.js' ],
+      'path/to/others': [ '*.java', '*.coffee' ],
+    }
   },
 })
 ```
 
+**result**
+
+```
+...
+
+Running "sloc" (sloc) task
+-------------------------------
+        physical lines : 51
+  lines of source code : 29
+         total comment : 6
+            singleline : 6
+             multiline : 0
+                 empty : 16
+
+ number of files read  : 12
+-------------------------------
+
+...
+```
+
+<!--
 #### Custom Options
 In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
 
@@ -81,6 +104,7 @@ grunt.initConfig({
   },
 })
 ```
+-->
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
