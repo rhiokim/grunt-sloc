@@ -1,6 +1,6 @@
 {
-  "name": "grunt-line-of-code",
-  "description": "The best Grunt plugin ever.",
+  "name": "grunt-sloc",
+  "description": "SLOC(source line of codes) plugin for Grunt.js",
   "version": "0.1.0",
   "homepage": "https://github.com/rhiokim/grunt-line-of-code",
   "author": {
@@ -40,6 +40,6 @@
     "grunt": "~0.4.1"
   },
   "keywords": [
-    "gruntplugin"
+    "gruntplugin, sloc"
   ]
 }
