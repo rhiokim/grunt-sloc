@@ -14,15 +14,11 @@ module.exports = function(grunt) {
   var sloc = require('sloc');
   var readDir = require('readdir');
 
-  var count = {
-    loc: 0,
-    sloc: 0,
-    cloc: 0,
-    scloc: 0,
-    mcloc: 0,
-    nloc: 0,
-    file: 0
-  };
+  function resetCounter() {
+    return {
+      loc: 0, sloc: 0, cloc: 0, scloc: 0, mcloc: 0, nloc: 0, file: 0
+    }
+  }
 
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
@@ -36,7 +32,7 @@ module.exports = function(grunt) {
 
     // Iterate over all specified file groups.
     this.files.forEach(function(f) {
-
+      var count = resetCounter();
       var src = readDir.readSync(f.dest, f.orig.src, readDir.ABSOLUTE_PATHS);
           src.forEach(function(f) {
             var source = fs.readFileSync(f, 'utf8');
