@@ -67,12 +67,25 @@ module.exports = function(grunt) {
           'test/fixtures/sub1': [ '*.js' ],
           'test/fixtures/sub2': [ '**.js' ]
         }
+      },
+      torelant: {
+        options: {
+          tolerant: true
+        },
+        files: {
+          'test/fixtures': [ '**' ]
+        }
+      },
+      gruntfile: {
+        files: {
+          './': [ 'Gruntfile.js' ]
+        }
       }
     },
 
     watch: {
-      files: [ 'tasks/*.js', 'test/**.js' ],
-      tasks: [ 'sloc:all_js', 'sloc:report_to_json' ]
+      files: [ 'tasks/*.js', 'test/**.js', 'Gruntfile.js' ],
+      tasks: [ 'sloc:gruntfile', 'sloc:all_js', 'sloc:report_to_json' ]
     },
 
     // Unit tests.

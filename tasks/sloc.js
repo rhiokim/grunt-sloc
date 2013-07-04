@@ -18,7 +18,7 @@ module.exports = function(grunt) {
   function resetCounter() {
     return {
       loc: 0, sloc: 0, cloc: 0, scloc: 0, mcloc: 0, nloc: 0, file: 0
-    }
+    };
   }
 
   // Please see the Grunt documentation for more information regarding task
@@ -28,33 +28,46 @@ module.exports = function(grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       reportType: 'stdout',  //stdout, json
-      reportPath: null
+      reportPath: null,
+      tolerant: false
     });
+
+    var exts = [ 'js', 'cc', 'c', 'coffeescript', 'coffee', 'python', 'py', 'java', 'php' ];
 
     // Iterate over all specified file groups.
     this.files.forEach(function(f) {
       var count = resetCounter();
       var src = readDir.readSync(f.dest, f.orig.src, readDir.ABSOLUTE_PATHS);
-          src.forEach(function(f) {
-            var source = fs.readFileSync(f, 'utf8');
-            var stats;
-            var ext = path.extname(f);
+          
+      src.forEach(function(f) {
+        var stats, source = fs.readFileSync(f, 'utf8');
+        var ext = path.extname(f);
 
-            if (!ext) {
-              return;
-            }
+        if (!ext) {
+          return;
+        }
 
-            stats = sloc(source, ext.substr(1, ext.length));
+        if (options.tolerant === true) {
+          if(exts.indexOf(ext) < 0 ) {
+            ext = '.js';
+          }
+        } else {
+          if (exts.indexOf(ext) < 0) {
+            return;
+          }
+        }
 
-            count.loc += stats.loc;
-            count.sloc += stats.sloc;
-            count.cloc += stats.cloc;
-            count.scloc += stats.scloc;
-            count.mcloc += stats.mcloc;
-            count.nloc += stats.nloc;
+        stats = sloc(source, ext.substr(1, ext.length));
 
-            count.file ++;
-          });
+        count.loc += stats.loc;
+        count.sloc += stats.sloc;
+        count.cloc += stats.cloc;
+        count.scloc += stats.scloc;
+        count.mcloc += stats.mcloc;
+        count.nloc += stats.nloc;
+
+        count.file ++;
+      });
     
       if(options.reportType === 'stdout') {
         grunt.log.writeln('-------------------------------');
@@ -65,7 +78,10 @@ module.exports = function(grunt) {
         grunt.log.writeln('             multiline : '+ String(count.mcloc));
         grunt.log.writeln('                 empty : '+ String(count.nloc).red);
         grunt.log.writeln('');
-        grunt.log.writeln(' number of files read  : '+ String(count.file).green);
+        grunt.log.writeln('  number of files read : '+ String(count.file).green);
+        grunt.log.writeln( options.tolerant ? 
+                          '         tolerant mode '.yellow : 
+                          '           strict mode '.red );
         grunt.log.writeln('-------------------------------');
       } else if (options.reportType === 'json') {
         
@@ -74,6 +90,7 @@ module.exports = function(grunt) {
         }
 
         grunt.file.write(options.reportPath, JSON.stringify(count, null, 2));
+        grunt.log.writeln('Create at: '+ options.reportPath.cyan);
       }
 
     });
