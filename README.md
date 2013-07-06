@@ -41,8 +41,8 @@ grunt.initConfig({
 Type: `String`
 Default value: `stdout`
 
-I will generate a JSON file SLOC analysis results. The default value is `stdout`.
-If we do not specify, in the case of the `stdout`, If you are prompted to enter the `json` and output to the CLI on the `. I will generate the json `file.
+It will generate a JSON file SLOC analysis results. The default value is `stdout`.
+If we do not specify, in the case of the `stdout`, If you are prompted to enter the `json` and output to the CLI on the json file.
 
 #### options.reportPath
 Type: `String`
@@ -141,7 +141,8 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-2013-07-04   v0.4.0   Support torelant mode.
-2013-07-03   v0.3.0   More (strict) exactly analyze
-2013-06-30   v0.2.2   Support report to exteranl file
-2013-06-30   v0.1.0   First release for Grunt 0.4.1.
+
+* 2013-07-04   v0.4.0   Support torelant mode.
+* 2013-07-03   v0.3.0   More (strict) exactly analyze
+* 2013-06-30   v0.2.2   Support report to exteranl file
+* 2013-06-30   v0.1.0   First release for Grunt 0.4.1.
