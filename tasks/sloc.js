@@ -48,11 +48,11 @@ module.exports = function(grunt) {
         }
 
         if (options.tolerant === true) {
-          if(exts.indexOf(ext) < 0 ) {
+          if(exts.indexOf(ext).replace('.','') < 0 ) {
             ext = '.js';
           }
         } else {
-          if (exts.indexOf(ext) < 0) {
+          if (exts.indexOf(ext).replace('.','') < 0) {
             return;
           }
         }
