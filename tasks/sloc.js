@@ -47,17 +47,19 @@ module.exports = function(grunt) {
           return;
         }
 
+        ext = (ext.charAt(0) === '.') ? ext.substr(1, ext.length) : ext;
+
         if (options.tolerant === true) {
-          if(exts.indexOf(ext).replace('.','') < 0 ) {
-            ext = '.js';
+          if(exts.indexOf(ext) < 0 ) {
+            ext = 'js';
           }
         } else {
-          if (exts.indexOf(ext).replace('.','') < 0) {
+          if (exts.indexOf(ext) < 0) {
             return;
           }
         }
 
-        stats = sloc(source, ext.substr(1, ext.length));
+        stats = sloc(source, ext);
 
         count.loc += stats.loc;
         count.sloc += stats.sloc;
