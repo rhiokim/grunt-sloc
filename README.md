@@ -50,24 +50,27 @@ Default value: ``
 
 I specify the path where you output the JSON file. Create the root folder if you do not specify if.
 
-#### options.torelant
+#### options.tolerant
 Type: `Boolean`
 Default value: `false`
 
-I set a generous analysis. The default is `false`.
-If `true`, analyze the SLOC on the basis of all the files that you have specified, when any `false`, it is not specified, the analyzes only the extensions that are supported if.
+Set as `false` to analyze only files with a subset of popular extensions.  `true` to analyze files with *any* file extension.  The default is `false`.
+
+If `true`, the SLOC will be executed on all of the files specified, regardless of file extension.  With 'tolerant' set to `false`, or 'tolerant' unspecified, only supported file extensions will be analyzed.
 
 ### Usage Examples
 
-#### Basic compression
+#### Basic SLOC
 This configuration will count line of the input files using the default options.
 
 ```js
 grunt.initConfig({
   sloc: {
-    files: {
-      'path/to/target': [ 'lib/onlyMyLib.js', 'app/**.js' ],
-      'path/to/others': [ '*.java', '*.coffee' ],
+    'my-source-files': {
+      files: {
+        'path/to/target': [ 'lib/onlyMyLib.js', 'app/**.js' ],
+        'path/to/others': [ '*.java', '*.coffee' ],
+      }
     }
   },
 })
@@ -115,7 +118,7 @@ grunt.initConfig({
 })
 ```
 
-**exported file example**
+**result**
 
 ```js
 {
