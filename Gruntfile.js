@@ -85,6 +85,14 @@ module.exports = function(grunt) {
           'test/fixtures': [ '**' ]
         }
       },
+      detail: {
+        options: {
+          reportDetail: true
+        },
+        files: {
+          'test/fixtures': [ '**' ]
+        }
+      },
       gruntfile: {
         files: {
           './': [ 'Gruntfile.js' ]

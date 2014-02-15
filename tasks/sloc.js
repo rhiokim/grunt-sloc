@@ -13,6 +13,7 @@ module.exports = function(grunt) {
   var fs = require('fs');
   var sloc = require('sloc');
   var readDir = require('readdir');
+  var AsciiTable = require('ascii-table');
   var path = require('path');
 
   function resetCounter() {
@@ -29,6 +30,7 @@ module.exports = function(grunt) {
     var options = this.options({
       reportType: 'stdout',  //stdout, json
       reportPath: null,
+      reportDetail: true,
       tolerant: false
     });
 
@@ -36,13 +38,13 @@ module.exports = function(grunt) {
 
     // Iterate over all specified file groups.
     this.files.forEach(function(f) {
-      var count = resetCounter();
+      var c, count = resetCounter();
       var src = readDir.readSync(f.dest, f.orig.src, readDir.ABSOLUTE_PATHS);
           
       src.forEach(function(f) {
         var stats, source = fs.readFileSync(f, 'utf8');
         var ext = path.extname(f).replace(/^./, '');
-        var prop, c;
+        var prop;
 
         if (!ext) {
           return;
@@ -81,19 +83,39 @@ module.exports = function(grunt) {
       });
     
       if(options.reportType === 'stdout') {
-        grunt.log.writeln('-------------------------------');
-        grunt.log.writeln('        physical lines : '+ String(count.loc).green);
-        grunt.log.writeln('  lines of source code : '+ String(count.sloc).green);
-        grunt.log.writeln('         total comment : '+ String(count.cloc).cyan);
-        grunt.log.writeln('            singleline : '+ String(count.scloc));
-        grunt.log.writeln('             multiline : '+ String(count.mcloc));
-        grunt.log.writeln('                 empty : '+ String(count.nloc).red);
-        grunt.log.writeln('');
-        grunt.log.writeln('  number of files read : '+ String(count.file).green);
-        grunt.log.writeln( options.tolerant ? 
-                          '         tolerant mode '.yellow : 
-                          '           strict mode '.red );
-        grunt.log.writeln('-------------------------------');
+        var table = new AsciiTable();
+        table.removeBorder();
+
+        table.addRow('physical lines', String(count.loc).green);
+        table.addRow('lines of source code', String(count.sloc).green);
+        table.addRow('total comment', String(count.cloc).cyan);
+        table.addRow('singleline', String(count.scloc));
+        table.addRow('multiline', String(count.mcloc));
+        table.addRow('empty', String(count.nloc).red);
+        table.addRow('', '');
+        table.addRow('number of files read', String(count.file).green);
+        table.addRow('mode', options.tolerant ? 'tolerant'.yellow : 'strict'.red);
+        table.addRow('', '');
+
+        // grunt.log.writeln('---------------------------------------------------------');
+        grunt.log.writeln(' ');
+        grunt.log.writeln(table.toString());
+
+        if (options.reportDetail) {
+          table = new AsciiTable();
+          table.setHeading('extension', 'loc', 'sloc', 'cloc', 'scloc', 'mcloc', 'nloc');
+
+          exts.forEach(function(ext) {
+            c = count[ext];
+            if (c) {
+              table.addRow(ext, c.loc, c.sloc, c.cloc, c.scloc, c.mcloc, c.nloc);
+            }
+          });
+          grunt.log.writeln(table.toString());
+        }
+
+        grunt.log.writeln(' ');
+        // grunt.log.writeln('---------------------------------------------------------');
       } else if (options.reportType === 'json') {
         
         if (!options.reportPath) {

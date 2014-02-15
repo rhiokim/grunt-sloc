@@ -50,6 +50,24 @@ Default value: ``
 
 I specify the path where you output the JSON file. Create the root folder if you do not specify if.
 
+#### options.reportDetail
+Type: `Boolean`
+Default value: `true`
+
+If `true`
+
+```shell
+//default reports
+
+//and detail reports
+.------------------------------------------------------.
+| extension | loc | sloc | cloc | scloc | mcloc | nloc |
+|-----------|-----|------|------|-------|-------|------|
+| js        |  11 |    8 |    2 |     2 |     0 |    1 |
+| css       |   8 |    7 |    0 |     0 |     0 |    1 |
+'------------------------------------------------------'
+```
+
 #### options.tolerant
 Type: `Boolean`
 Default value: `false`
@@ -72,7 +90,7 @@ grunt.initConfig({
         'path/to/others': [ '*.java', '*.coffee' ],
       }
     }
-  },
+  }
 })
 ```
 
@@ -83,6 +101,7 @@ grunt.initConfig({
 
 Running "sloc" (sloc) task
 -------------------------------
+
         physical lines : 51
   lines of source code : 29
          total comment : 6
@@ -90,9 +109,15 @@ Running "sloc" (sloc) task
              multiline : 0
                  empty : 16
 
- number of files read  : 12
-   strict(or torelant) mode
--------------------------------
+  number of files read : 12
+                  mode : strict(or torelant) 
+
+.------------------------------------------------------.
+| extension | loc | sloc | cloc | scloc | mcloc | nloc |
+|-----------|-----|------|------|-------|-------|------|
+| js        |  11 |    8 |    2 |     2 |     0 |    1 |
+| css       |   8 |    7 |    0 |     0 |     0 |    1 |
+'------------------------------------------------------'
 
 ...
 ```
@@ -128,7 +153,25 @@ grunt.initConfig({
   "scloc": 10,  //singleline
   "mcloc": 0,   //multiline
   "nloc": 17,   //multiline
-  "file": 22    //empty
+  "file": 22,   //empty
+  "css": {      //CSS SLOC
+    "loc": 8,
+    "sloc": 7,
+    "cloc": 0,
+    "scloc": 0,
+    "mcloc": 0,
+    "nloc": 1,
+    "file": 1
+  },
+  "js": {       //JS SLOC
+    "loc": 11,
+    "sloc": 8,
+    "cloc": 2,
+    "scloc": 2,
+    "mcloc": 0,
+    "nloc": 1,
+    "file": 4
+  }
 }
 ```
 
@@ -146,8 +189,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
-* 2014-02-15   v0.5.0   Support HTML, CSS
-* 2013-07-04   v0.4.0   Support torelant mode.
-* 2013-07-03   v0.3.0   More (strict) exactly analyze
-* 2013-06-30   v0.2.2   Support report to exteranl file
-* 2013-06-30   v0.1.0   First release for Grunt 0.4.1.
+* 2014-02-15  v0.5.0  Support HTML, CSS
+* 2013-07-04  v0.4.0  Support torelant mode.
+* 2013-07-03  v0.3.0  More (strict) exactly analyze
+* 2013-06-30  v0.2.2  Support report to exteranl file
+* 2013-06-30  v0.1.0  First release for Grunt 0.4.1.
