@@ -68,6 +68,15 @@ module.exports = function(grunt) {
           'test/fixtures/sub2': [ '**.js' ]
         }
       },
+      all_file_report_to_json: {
+        options: {
+          reportType: 'json',
+          reportPath: 'test/expected/sloc-v<%= pkg.version %>-all.json'
+        },
+        files: {
+          'test/fixtures': [ '**' ]
+        }
+      },
       torelant: {
         options: {
           tolerant: true

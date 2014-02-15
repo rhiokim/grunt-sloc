@@ -133,6 +133,7 @@ grunt.initConfig({
 ```
 
 ### Supported Language
+* HTML / CSS - Contributor [hsablonniere](https://github.com/hsablonniere)
 * CoffeeScript
 * C / C++
 * JavaScript
@@ -145,6 +146,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+* 2014-02-15   v0.5.0   Support HTML, CSS
 * 2013-07-04   v0.4.0   Support torelant mode.
 * 2013-07-03   v0.3.0   More (strict) exactly analyze
 * 2013-06-30   v0.2.2   Support report to exteranl file

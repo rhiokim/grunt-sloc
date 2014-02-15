@@ -32,7 +32,7 @@ module.exports = function(grunt) {
       tolerant: false
     });
 
-    var exts = [ 'js', 'cc', 'c', 'coffeescript', 'coffee', 'python', 'py', 'java', 'php' ];
+    var exts = [ 'js', 'cc', 'c', 'html', 'css', 'coffeescript', 'coffee', 'python', 'py', 'java', 'php' ];
 
     // Iterate over all specified file groups.
     this.files.forEach(function(f) {
@@ -41,13 +41,16 @@ module.exports = function(grunt) {
           
       src.forEach(function(f) {
         var stats, source = fs.readFileSync(f, 'utf8');
-        var ext = path.extname(f);
+        var ext = path.extname(f).replace(/^./, '');
+        var prop, c;
 
         if (!ext) {
           return;
         }
 
-        ext = (ext.charAt(0) === '.') ? ext.substr(1, ext.length) : ext;
+        if (!count.hasOwnProperty(ext)) {
+          count[ext] = resetCounter();
+        }
 
         if (options.tolerant === true) {
           if(exts.indexOf(ext) < 0 ) {
@@ -60,6 +63,12 @@ module.exports = function(grunt) {
         }
 
         stats = sloc(source, ext);
+        c = count[ext];
+        c.file++;
+
+        for (prop in stats) {
+          c[prop] += stats[prop];
+        }
 
         count.loc += stats.loc;
         count.sloc += stats.sloc;
@@ -68,7 +77,7 @@ module.exports = function(grunt) {
         count.mcloc += stats.mcloc;
         count.nloc += stats.nloc;
 
-        count.file ++;
+        count.file++;
       });
     
       if(options.reportType === 'stdout') {
