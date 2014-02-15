@@ -34,7 +34,7 @@ module.exports = function(grunt) {
       tolerant: false
     });
 
-    var exts = [ 'js', 'cc', 'c', 'html', 'css', 'coffeescript', 'coffee', 'python', 'py', 'java', 'php' ];
+    var exts = [ 'js', 'javascript', 'cc', 'c', 'html', 'css', 'scss', 'coffeescript', 'coffee', 'python', 'py', 'java', 'php', 'php5', 'go' ];
 
     // Iterate over all specified file groups.
     this.files.forEach(function(f) {
