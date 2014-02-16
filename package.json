@@ -1,7 +1,7 @@
 {
   "name": "grunt-sloc",
   "description": "SLOC(source line of codes) plugin for Grunt.js",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "homepage": "https://github.com/rhiokim/grunt-sloc",
   "author": {
     "name": "rhio kim",
