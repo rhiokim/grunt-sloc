@@ -31,7 +31,7 @@
   "dependencies": {
     "readdir": "~0.0.6",
     "sloc": "~0.0.4",
-    "asciitable": "0.0.7"
+    "ascii-table": "0.0.4"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.1.1",

@@ -97,7 +97,6 @@ module.exports = function(grunt) {
         table.addRow('mode', options.tolerant ? 'tolerant'.yellow : 'strict'.red);
         table.addRow('', '');
 
-        // grunt.log.writeln('---------------------------------------------------------');
         grunt.log.writeln(' ');
         grunt.log.writeln(table.toString());
 
@@ -115,7 +114,6 @@ module.exports = function(grunt) {
         }
 
         grunt.log.writeln(' ');
-        // grunt.log.writeln('---------------------------------------------------------');
       } else if (options.reportType === 'json') {
         
         if (!options.reportPath) {
