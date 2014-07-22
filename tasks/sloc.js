@@ -17,9 +17,12 @@ module.exports = function(grunt) {
   var path = require('path');
 
   function resetCounter() {
-    return {
-      loc: 0, sloc: 0, cloc: 0, scloc: 0, mcloc: 0, nloc: 0, file: 0
-    };
+    var counter = {};
+    for (var i in sloc.keys){
+      counter[sloc.keys[i]] = 0;
+    }
+    counter.file = 0;
+    return counter;
   }
 
   // Please see the Grunt documentation for more information regarding task
@@ -34,7 +37,7 @@ module.exports = function(grunt) {
       tolerant: false
     });
 
-    var exts = [ 'js', 'javascript', 'cc', 'c', 'html', 'css', 'scss', 'coffeescript', 'coffee', 'python', 'py', 'java', 'php', 'php5', 'go' ];
+    var exts = sloc.extensions;
 
     // Iterate over all specified file groups.
     this.files.forEach(function(f) {
@@ -72,12 +75,12 @@ module.exports = function(grunt) {
           c[prop] += stats[prop];
         }
 
-        count.loc += stats.loc;
-        count.sloc += stats.sloc;
-        count.cloc += stats.cloc;
-        count.scloc += stats.scloc;
-        count.mcloc += stats.mcloc;
-        count.nloc += stats.nloc;
+        count.total += stats.total;
+        count.source += stats.source;
+        count.comment += stats.comment;
+        count.single += stats.single;
+        count.block += stats.block;
+        count.empty += stats.empty;
 
         count.file++;
       });
@@ -86,12 +89,12 @@ module.exports = function(grunt) {
         var table = new AsciiTable();
         table.removeBorder();
 
-        table.addRow('physical lines', String(count.loc).green);
-        table.addRow('lines of source code', String(count.sloc).green);
-        table.addRow('total comment', String(count.cloc).cyan);
-        table.addRow('singleline', String(count.scloc));
-        table.addRow('multiline', String(count.mcloc));
-        table.addRow('empty', String(count.nloc).red);
+        table.addRow('physical lines', String(count.total).green);
+        table.addRow('lines of source code', String(count.source).green);
+        table.addRow('total comment', String(count.comment).cyan);
+        table.addRow('singleline', String(count.single));
+        table.addRow('multiline', String(count.block));
+        table.addRow('empty', String(count.empty).red);
         table.addRow('', '');
         table.addRow('number of files read', String(count.file).green);
         table.addRow('mode', options.tolerant ? 'tolerant'.yellow : 'strict'.red);
@@ -102,12 +105,12 @@ module.exports = function(grunt) {
 
         if (options.reportDetail) {
           table = new AsciiTable();
-          table.setHeading('extension', 'loc', 'sloc', 'cloc', 'scloc', 'mcloc', 'nloc');
+          table.setHeading('extension', 'total', 'source', 'comment', 'single', 'block', 'empty');
 
           exts.forEach(function(ext) {
             c = count[ext];
             if (c) {
-              table.addRow(ext, c.loc, c.sloc, c.cloc, c.scloc, c.mcloc, c.nloc);
+              table.addRow(ext, c.total, c.source, c.comment, c.single, c.block, c.empty);
             }
           });
           grunt.log.writeln(table.toString());

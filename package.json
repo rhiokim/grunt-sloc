@@ -29,8 +29,8 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "readdir": "~0.0.6",
-    "sloc": "~0.0.4",
+    "readdir": "~0.0.13",
+    "sloc": "~0.1.0",
     "ascii-table": "0.0.4"
   },
   "devDependencies": {
