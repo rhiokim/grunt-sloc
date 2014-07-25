@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "readdir": "~0.0.13",
-    "sloc": "~0.1.0",
+    "sloc": "~0.1.1",
     "ascii-table": "0.0.4"
   },
   "devDependencies": {
@@ -38,7 +38,6 @@
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-nodeunit": "~0.1.2",
     "grunt": "~0.4.1",
-    "readdir": "0.0.6",
     "grunt-contrib-watch": "~0.4.4"
   },
   "peerDependencies": {
