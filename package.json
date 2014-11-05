@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "readdir": "~0.0.6",
-    "sloc": "~0.0.4",
+    "sloc": "~0.1.7",
     "ascii-table": "0.0.4"
   },
   "devDependencies": {
