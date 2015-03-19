@@ -3,3 +3,4 @@ npm-debug.log
 tmp
 test/expected/*.json
 *.swp
+.DS_Store
