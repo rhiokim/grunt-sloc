@@ -8,126 +8,139 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
-  var fs = require('fs');
-  var sloc = require('sloc');
-  var readDir = require('readdir');
-  var AsciiTable = require('ascii-table');
-  var path = require('path');
+	var fs = require('fs');
+	var sloc = require('sloc');
+	var readDir = require('readdir');
+	var AsciiTable = require('ascii-table');
+	var path = require('path');
 
-  function resetCounter() {
-    var counter = {};
-    for (var i in sloc.keys){
-      counter[sloc.keys[i]] = 0;
-    }
-    counter.file = 0;
-    return counter;
-  }
+	function resetCounter() {
+		return {
+			loc: 0,
+			sloc: 0,
+			cloc: 0,
+			scloc: 0,
+			mcloc: 0,
+			nloc: 0,
+			file: 0
+		};
+	}
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+	// Please see the Grunt documentation for more information regarding task
+	// creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('sloc', 'Source lines of code', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      reportType: 'stdout',  //stdout, json
-      reportPath: null,
-      reportDetail: true,
-      tolerant: false
-    });
+	grunt.registerMultiTask('sloc', 'Source lines of code', function () {
+		// Merge task-specific and/or target-specific options with these defaults.
+		var options = this.options({
+			reportType: 'stdout', //stdout, json
+			reportPath: null,
+			reportDetail: true,
+			tolerant: false
+		});
+		var self = this;
 
-    var exts = sloc.extensions;
+		var exts = ['js', 'javascript', 'cc', 'c', 'html', 'css', 'scss', 'coffeescript', 'coffee', 'python', 'py', 'java', 'php', 'php5', 'go'];
+		var d = {
+			createdAt: new Date(),
+			targets: []
+		};
+		if (options.reportType === 'json' && grunt.file.exists(options.reportPath)) {
+			d = grunt.file.readJSON(options.reportPath);
+		}
+		var c, count = resetCounter();
+		if (d.targets.indexOf(self.target) < 0) {
+			d.targets.push(self.target);
+		}
+		// Iterate over all specified file groups.
+		this.files.forEach(function (f) {
+			var src = readDir.readSync(f.dest, f.orig.src, readDir.ABSOLUTE_PATHS);
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      var c, count = resetCounter();
-      var src = readDir.readSync(f.dest, f.orig.src, readDir.ABSOLUTE_PATHS);
-          
-      src.forEach(function(f) {
-        var stats, source = fs.readFileSync(f, 'utf8');
-        var ext = path.extname(f).replace(/^./, '');
-        var prop;
+			src.forEach(function (f) {
+				var stats, source = fs.readFileSync(f, 'utf8');
+				var ext = path.extname(f).replace(/^./, '');
+				var prop;
 
-        if (!ext) {
-          return;
-        }
+				if (!ext) {
+					return;
+				}
 
-        if (!count.hasOwnProperty(ext)) {
-          count[ext] = resetCounter();
-        }
+				if (!count.hasOwnProperty(ext)) {
+					count[ext] = resetCounter();
+				}
 
-        if (options.tolerant === true) {
-          if(exts.indexOf(ext) < 0 ) {
-            ext = 'js';
-          }
-        } else {
-          if (exts.indexOf(ext) < 0) {
-            return;
-          }
-        }
+				if (options.tolerant === true) {
+					if (exts.indexOf(ext) < 0) {
+						ext = 'js';
+					}
+				} else {
+					if (exts.indexOf(ext) < 0) {
+						return;
+					}
+				}
 
-        stats = sloc(source, ext);
-        c = count[ext];
-        c.file++;
+				stats = sloc(source, ext);
+				c = count[ext];
+				c.file++;
 
-        for (prop in stats) {
-          c[prop] += stats[prop];
-        }
+				for (prop in stats) {
+					c[prop] += stats[prop];
+				}
 
-        count.total += stats.total;
-        count.source += stats.source;
-        count.comment += stats.comment;
-        count.single += stats.single;
-        count.block += stats.block;
-        count.empty += stats.empty;
+				count.loc += stats.loc;
+				count.sloc += stats.sloc;
+				count.cloc += stats.cloc;
+				count.scloc += stats.scloc;
+				count.mcloc += stats.mcloc;
+				count.nloc += stats.nloc;
 
-        count.file++;
-      });
-    
-      if(options.reportType === 'stdout') {
-        var table = new AsciiTable();
-        table.removeBorder();
+				count.file++;
+			});
+		});
+		if (options.reportType === 'stdout') {
+			var table = new AsciiTable();
+			table.removeBorder();
 
-        table.addRow('physical lines', String(count.total).green);
-        table.addRow('lines of source code', String(count.source).green);
-        table.addRow('total comment', String(count.comment).cyan);
-        table.addRow('singleline', String(count.single));
-        table.addRow('multiline', String(count.block));
-        table.addRow('empty', String(count.empty).red);
-        table.addRow('', '');
-        table.addRow('number of files read', String(count.file).green);
-        table.addRow('mode', options.tolerant ? 'tolerant'.yellow : 'strict'.red);
-        table.addRow('', '');
+			table.addRow('physical lines', String(count.loc).green);
+			table.addRow('lines of source code', String(count.sloc).green);
+			table.addRow('total comment', String(count.cloc).cyan);
+			table.addRow('singleline', String(count.scloc));
+			table.addRow('multiline', String(count.mcloc));
+			table.addRow('empty', String(count.nloc).red);
+			table.addRow('', '');
+			table.addRow('number of files read', String(count.file).green);
+			table.addRow('mode', options.tolerant ? 'tolerant'.yellow : 'strict'.red);
+			table.addRow('', '');
 
-        grunt.log.writeln(' ');
-        grunt.log.writeln(table.toString());
+			grunt.log.writeln(' ');
+			grunt.log.writeln(table.toString());
 
-        if (options.reportDetail) {
-          table = new AsciiTable();
-          table.setHeading('extension', 'total', 'source', 'comment', 'single', 'block', 'empty');
+			if (options.reportDetail) {
+				table = new AsciiTable();
+				table.setHeading('extension', 'loc', 'sloc', 'cloc', 'scloc', 'mcloc', 'nloc');
 
-          exts.forEach(function(ext) {
-            c = count[ext];
-            if (c) {
-              table.addRow(ext, c.total, c.source, c.comment, c.single, c.block, c.empty);
-            }
-          });
-          grunt.log.writeln(table.toString());
-        }
+				exts.forEach(function (ext) {
+					c = count[ext];
+					if (c) {
+						table.addRow(ext, c.loc, c.sloc, c.cloc, c.scloc, c.mcloc, c.nloc);
+					}
+				});
+				grunt.log.writeln(table.toString());
+			}
 
-        grunt.log.writeln(' ');
-      } else if (options.reportType === 'json') {
-        
-        if (!options.reportPath) {
-          grunt.log.warn('Please specify the reporting path.');
-        }
+			grunt.log.writeln(' ');
+		} else if (options.reportType === 'json') {
 
-        grunt.file.write(options.reportPath, JSON.stringify(count, null, 2));
-        grunt.log.writeln('Create at: '+ options.reportPath.cyan);
-      }
-
-    });
-  });
+			if (!options.reportPath) {
+				grunt.log.warn('Please specify the reporting path.');
+			}
+			d[self.target] = count;
+			count.createdAt = new Date();
+			d.createdAt = new Date();
+			grunt.file.write(options.reportPath, JSON.stringify(d, null, 2));
+			grunt.log.writeln('Create at: ' + options.reportPath.cyan);
+		}
+	});
 
 };
