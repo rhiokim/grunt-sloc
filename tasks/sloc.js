@@ -60,7 +60,7 @@ module.exports = function (grunt) {
 		var self = this;
 		var c, count = resetCounter();
 
-		var exts = ['js', 'javascript', 'cc', 'c', 'html', 'css', 'scss', 'coffeescript', 'coffee', 'python', 'py', 'java', 'php', 'php5', 'go'];
+		var exts = ['js', 'javascript', 'cc', 'c', 'html', 'css', 'scss', 'coffeescript', 'coffee', 'python', 'py', 'java', 'php', 'php5', 'go', 'less'];
 
 		var d = (options.reportType === 'json') ? getSlocFile(options.reportPath) : resetD();
 		if (d.targets.indexOf(self.target) < 0) {
@@ -106,9 +106,9 @@ module.exports = function (grunt) {
 				count.source += stats.source;
 				count.comment += stats.comment;
 				count.single += stats.single;
-				count.block += stats.block;
 				count.mixed += stats.mixed;
 				count.empty += stats.empty;
+				count.block += stats.block;
 
 				count.file++;
 			});
@@ -121,9 +121,9 @@ module.exports = function (grunt) {
 			table.addRow('lines of source code', String(count.source).green);
 			table.addRow('total comment', String(count.comment).cyan);
 			table.addRow('singleline', String(count.single));
-			table.addRow('block', String(count.block));
-			table.addRow('mixed', String(count.mixed));
+			table.addRow('multiline', String(count.mixed));
 			table.addRow('empty', String(count.empty).red);
+			table.addRow('block', String(count.block));
 			table.addRow('', '');
 			table.addRow('number of files read', String(count.file).green);
 			table.addRow('mode', options.tolerant ? 'tolerant'.yellow : 'strict'.red);
@@ -134,12 +134,12 @@ module.exports = function (grunt) {
 
 			if (options.reportDetail) {
 				table = new AsciiTable();
-				table.setHeading('extension', 'total', 'source', 'comments', 'single', 'block', 'mixed', 'empty');
+				table.setHeading('extension', 'total', 'source', 'comment', 'single', 'mixed', 'empty', 'block');
 
 				exts.forEach(function (ext) {
 					c = count[ext];
 					if (c) {
-						table.addRow(ext, c.total, c.source, c.comment, c.single, c.block, c.mixed, c.empty);
+						table.addRow(ext, c.total, c.source, c.comment, c.single, c.mixed, c.empty, c.block);
 					}
 				});
 				grunt.log.writeln(table.toString());
