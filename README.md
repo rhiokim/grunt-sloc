@@ -60,12 +60,13 @@ If `true`
 //default reports
 
 //and detail reports
-.------------------------------------------------------.
-| extension | loc | sloc | cloc | scloc | mcloc | nloc |
-|-----------|-----|------|------|-------|-------|------|
-| js        |  11 |    8 |    2 |     2 |     0 |    1 |
-| css       |   8 |    7 |    0 |     0 |     0 |    1 |
-'------------------------------------------------------'
+.-----------------------------------------------------------------------.
+| extension | total | source | comment | single | mixed | empty | block |
+|-----------|-------|--------|---------|--------|-------|-------|-------|
+| js        |    11 |      8 |       2 |      2 |     0 |     1 |     0 |
+| css       |     8 |      7 |       0 |      0 |     0 |     1 |     0 |
+| less      |   235 |    152 |      45 |     30 |     0 |    38 |    15 |
+'-----------------------------------------------------------------------'
 ```
 
 #### options.tolerant
@@ -111,13 +112,14 @@ Running "sloc" (sloc) task
 
   number of files read : 12
                   mode : strict(or torelant) 
-
-.------------------------------------------------------.
-| extension | loc | sloc | cloc | scloc | mcloc | nloc |
-|-----------|-----|------|------|-------|-------|------|
-| js        |  11 |    8 |    2 |     2 |     0 |    1 |
-| css       |   8 |    7 |    0 |     0 |     0 |    1 |
-'------------------------------------------------------'
+                  
+.-----------------------------------------------------------------------.
+| extension | total | source | comment | single | mixed | empty | block |
+|-----------|-------|--------|---------|--------|-------|-------|-------|
+| js        |    11 |      8 |       2 |      2 |     0 |     1 |     0 |
+| css       |     8 |      7 |       0 |      0 |     0 |     1 |     0 |
+| less      |   235 |    152 |      45 |     30 |     0 |    38 |    15 |
+'-----------------------------------------------------------------------'
 
 ...
 ```
@@ -147,30 +149,42 @@ grunt.initConfig({
 
 ```js
 {
-  "loc": 72,    //physical lines
-  "sloc": 45,   //lines of source code
-  "cloc": 10,   //total comment
-  "scloc": 10,  //singleline
-  "mcloc": 0,   //multiline
-  "nloc": 17,   //multiline
-  "file": 22,   //empty
-  "css": {      //CSS SLOC
-    "loc": 8,
-    "sloc": 7,
-    "cloc": 0,
-    "scloc": 0,
-    "mcloc": 0,
-    "nloc": 1,
-    "file": 1
+  "createdAt": "2015-03-19T03:35:53.326Z",
+  "total": {
+    "total": 5,
+    "source": 4,
+    "comment": 1,
+    "single": 1,
+    "block": 0,
+    "mixed": 0,
+    "empty": 0,
+    "file": 3
   },
-  "js": {       //JS SLOC
-    "loc": 11,
-    "sloc": 8,
-    "cloc": 2,
-    "scloc": 2,
-    "mcloc": 0,
-    "nloc": 1,
-    "file": 4
+  "targets": [
+    "report_to_json"
+  ],
+  "data": {
+    "report_to_json": {
+      "total": 5,
+      "source": 4,
+      "comment": 1,
+      "single": 1,
+      "block": 0,
+      "mixed": 0,
+      "empty": 0,
+      "file": 3,
+      "js": {
+        "total": 5,
+        "source": 4,
+        "comment": 1,
+        "single": 1,
+        "block": 0,
+        "mixed": 0,
+        "empty": 0,
+        "file": 3
+      },
+      "createdAt": "2015-03-19T03:35:53.326Z"
+    }
   }
 }
 ```
@@ -191,6 +205,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+* 2014-02-15  v0.6.0  Support less.
 * 2014-02-15  v0.5.1  Update Supporting languages table
 * 2014-02-15  v0.5.0  Support HTML, CSS
 * 2013-07-04  v0.4.0  Support torelant mode.
