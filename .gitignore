@@ -4,3 +4,4 @@ tmp
 test/expected/*.json
 *.swp
 .DS_Store
+.idea

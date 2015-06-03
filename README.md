@@ -77,6 +77,23 @@ Set as `false` to analyze only files with a subset of popular extensions.  `true
 
 If `true`, the SLOC will be executed on all of the files specified, regardless of file extension.  With 'tolerant' set to `false`, or 'tolerant' unspecified, only supported file extensions will be analyzed.
 
+#### options.alias
+Type: `Object`
+Default value: `null`
+
+Custom ext to act like standard ext.
+
+eg.
+
+```js
+{
+  php5: 'php',
+  less: 'css',
+  vm: 'html'
+}
+```
+
+
 ### Usage Examples
 
 #### Basic SLOC
