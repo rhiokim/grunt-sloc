@@ -60,7 +60,7 @@ module.exports = function (grunt) {
 		var self = this;
 		var c, count = resetCounter();
 
-		var exts = ['c', 'cc', 'clj', 'cljs', 'coffee', 'cpp', 'cr', 'cs', 'css', 'cxx', 'erl', 'go', 'groovy', 'gs', 'h', 'handlebars', 'hbs', 'hpp', 'hr', 'hs', 'html', 'htm', 'hx', 'hxx', 'hy', 'ino', 'jade', 'java', 'jl', 'js', 'jsx', 'less', 'lua', 'ls', 'mochi', 'monkey', 'mustache', 'nix', 'nim', 'php', 'php5', 'pl', 'py', 'r', 'rb', 'rkt', 'rs', 'sass', 'scala', 'scss', 'styl', 'svg', 'swift', 'ts', 'vb', 'xml', 'yaml', 'm', 'mm'];
+		var exts = sloc.extensions;
 
 		var d = (options.reportType === 'json') ? getSlocFile(options.reportPath) : resetD();
 		if (d.targets.indexOf(self.target) < 0) {
