@@ -97,6 +97,11 @@ module.exports = function(grunt) {
         files: {
           './': [ 'Gruntfile.js' ]
         }
+      },
+      negate_match: {
+        files: {
+          'test/fixtures': [ '**/**.js', '!**/sub2/**' ]
+        }
       }
     },
 

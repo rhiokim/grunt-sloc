@@ -214,6 +214,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+* 2016-04-16  v0.7.1  Add negate match
 * 2016-04-16  v0.7.0  Update modules
 * 2014-02-15  v0.6.0  Support less.
 * 2014-02-15  v0.5.1  Update Supporting languages table

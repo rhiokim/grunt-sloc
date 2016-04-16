@@ -47,15 +47,24 @@ module.exports = function(grunt) {
     this.files.forEach(function(f) {
       var c, count = resetCounter();
       var src = readDir.readSync(f.dest, f.orig.src, readDir.ABSOLUTE_PATHS);
+      var srcFilters = f.orig.src;
 
       src.forEach(function(f) {
-        var stats, source = fs.readFileSync(f, 'utf8');
-        var ext = path.extname(f).replace(/^./, '');
-        var prop;
+        var stats, 
+            prop, 
+            source, 
+            ext = path.extname(f).replace(/^./, '');
 
         if (!ext) {
           return;
         }
+
+        //#14 negate match
+        if (grunt.file.match(srcFilters, [f]).length === 0) {
+           return;
+        }
+
+        source = fs.readFileSync(f, 'utf8');
 
         if (!count.hasOwnProperty(ext)) {
           count[ext] = resetCounter();

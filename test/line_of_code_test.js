@@ -28,6 +28,7 @@ exports.line_of_code = {
     done();
   },
   main: function(test) {
+    test.ok(true, 'dummy');
     test.done();
   }
 };
