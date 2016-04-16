@@ -207,21 +207,14 @@ grunt.initConfig({
 ```
 
 ### Supported Language
-* CoffeeScript
-* C / C++
-* CSS / SCSS -  - Contributor [hsablonniere](https://github.com/hsablonniere)
-* Go
-* HTML - Contributor [hsablonniere](https://github.com/hsablonniere)
-* Java
-* JavaScript
-* Python
-* PHP
+* [https://github.com/flosse/sloc#supported-languages](https://github.com/flosse/sloc#supported-languages)
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
 
+* 2016-04-16  v0.7.0  Update modules
 * 2014-02-15  v0.6.0  Support less.
 * 2014-02-15  v0.5.1  Update Supporting languages table
 * 2014-02-15  v0.5.0  Support HTML, CSS
